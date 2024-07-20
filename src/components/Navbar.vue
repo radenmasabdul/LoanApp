@@ -3,7 +3,7 @@
 <template>
   <div class="navbar bg-blue-600">
     <div class="flex-1">
-      <h1 class="text-xl text-white cursor-pointer">Loan App</h1>
+      <h1 class="text-2xl text-white cursor-pointer font-JakartaSans">Loan App</h1>
     </div>
     <div class="flex-none gap-2">
       <div class="form-control">
