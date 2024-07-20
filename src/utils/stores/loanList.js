@@ -5,10 +5,17 @@ export const useLoanList = defineStore('loanList', {
     state: () => ({
         dataLoanList: [],
         isLoading: false,
+        search: "",
     }),
     getters: {
         getDataLoan(state) {
             return state.dataLoanList
+        },
+        filteredDataLoan(state) {
+            if (!state.search) return state.dataLoanList;
+            return state.dataLoanList.filter(loan =>
+                loan.purpose.toLowerCase().includes(state.search.toLowerCase())
+            );
         },
     },
     actions: {
@@ -27,6 +34,9 @@ export const useLoanList = defineStore('loanList', {
             } finally {
                 this.isLoading = false;
             }
-        }
+        },
+        setSearchKeyword(keyword) {
+            this.search = keyword;
+        },
     },
 })

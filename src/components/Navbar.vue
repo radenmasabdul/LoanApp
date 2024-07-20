@@ -1,5 +1,21 @@
 <script setup>
 import { RouterLink } from "vue-router";
+import { ref } from "vue";
+import { useLoanList } from "../utils/stores/loanList";
+
+const store = useLoanList();
+const searchKeyword = ref(store.getSearchData);
+
+const handleKeyPress = (event) => {
+  if (event.key === "Enter") {
+    store.setSearchKeyword(searchKeyword.value);
+  }
+};
+
+const clearSearch = () => {
+  searchKeyword.value = "";
+  store.setSearchKeyword("");
+};
 </script>
 
 <template>
@@ -11,7 +27,16 @@ import { RouterLink } from "vue-router";
     </div>
     <div class="flex-none gap-2">
       <div class="form-control">
-        <input type="search" id="search" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+        <input
+          type="search"
+          name="search"
+          id="search"
+          placeholder="Search"
+          class="input input-bordered w-24 md:w-auto"
+          v-model="searchKeyword"
+          @keypress="handleKeyPress"
+          @click="clearSearch"
+        />
       </div>
     </div>
   </div>
