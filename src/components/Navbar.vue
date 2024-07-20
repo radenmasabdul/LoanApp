@@ -1,9 +1,13 @@
-<script setup></script>
+<script setup>
+import { RouterLink } from "vue-router";
+</script>
 
 <template>
   <div class="navbar bg-blue-600">
     <div class="flex-1">
-      <h1 class="text-2xl text-white cursor-pointer font-JakartaSans">Loan App</h1>
+      <RouterLink to="/">
+        <h1 class="text-2xl text-white cursor-pointer font-JakartaSans">Loan App</h1>
+      </RouterLink>
     </div>
     <div class="flex-none gap-2">
       <div class="form-control">
