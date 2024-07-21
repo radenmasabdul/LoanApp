@@ -1,13 +1,32 @@
 <script setup>
+import ButtonToTop from "../components/ButtonToTop.vue";
+
 import { RouterLink } from "vue-router";
 import { useLoanList } from "../utils/stores/loanList";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const store = useLoanList();
 const dataLoanList = computed(() => store.filteredDataLoan);
+
+const showToTopButton = ref(false);
+
+const loadMore = () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+    store.loadMoreData();
+  }
+
+  showToTopButton.value = window.scrollY > 500;
+};
+
+onMounted(() => {
+  store.getLoanList();
+  window.addEventListener("scroll", loadMore);
+  return () => window.removeEventListener("scroll", loadMore);
+});
 </script>
 
 <template>
+  <ButtonToTop v-if="showToTopButton" />
   <div class="flex flex-wrap justify-center gap-4 py-20">
     <template v-if="dataLoanList.length > 0">
       <div class="card bg-base-100 w-96 shadow-xl cursor-default" v-for="data in dataLoanList" :key="data.id">

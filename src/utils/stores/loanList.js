@@ -4,6 +4,7 @@ import Api from "../index";
 export const useLoanList = defineStore('loanList', {
     state: () => ({
         dataLoanList: [],
+        allLoansData: [],
         isLoading: false,
         search: "",
     }),
@@ -28,7 +29,8 @@ export const useLoanList = defineStore('loanList', {
                 const res = await Api.get('/loans.json');
 
                 // console.log('hasil res:', res.data)
-                this.dataLoanList = res.data;
+                this.allLoansData = res.data;
+                this.dataLoanList = res.data.slice(0, 5);
             } catch (error) {
                 console.error(error)
             } finally {
@@ -37,6 +39,10 @@ export const useLoanList = defineStore('loanList', {
         },
         setSearchKeyword(keyword) {
             this.search = keyword;
+        },
+        loadMoreData() {
+            const nextItems = this.allLoansData.slice(this.dataLoanList.length, this.dataLoanList.length + 10); // Mengambil sepuluh item berikutnya dari allLoansData
+            this.dataLoanList = [...this.dataLoanList, ...nextItems]; // Menambahkan item yang diambil ke dataLoanList
         },
     },
 })
