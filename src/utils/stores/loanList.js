@@ -13,10 +13,13 @@ export const useLoanList = defineStore('loanList', {
             return state.dataLoanList
         },
         filteredDataLoan(state) {
-            if (!state.search) return state.dataLoanList;
-            return state.dataLoanList.filter(loan =>
-                loan.purpose.toLowerCase().includes(state.search.toLowerCase())
-            );
+            return state.dataLoanList.filter(loan => {
+                const matchesSearch = loan.purpose.toLowerCase().includes(state.search.toLowerCase());
+                const matchesPurpose = !state.filterPurpose || loan.purpose === state.filterPurpose;
+                const matchesType = !state.filterType || loan.collateral.type === state.filterType;
+                const matchesRating = !state.filterRating || loan.riskRating === state.filterRating;
+                return matchesSearch && matchesPurpose && matchesType && matchesRating;
+            });
         },
     },
     actions: {
@@ -43,6 +46,11 @@ export const useLoanList = defineStore('loanList', {
         loadMoreData() {
             const nextItems = this.allLoansData.slice(this.dataLoanList.length, this.dataLoanList.length + 10); // Mengambil sepuluh item berikutnya dari allLoansData
             this.dataLoanList = [...this.dataLoanList, ...nextItems]; // Menambahkan item yang diambil ke dataLoanList
+        },
+        filterData(filters) {
+            this.filterPurpose = filters.purpose;
+            this.filterType = filters.type;
+            this.filterRating = filters.rating;
         },
     },
 })
