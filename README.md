@@ -44,18 +44,11 @@ First copy the repo via the following link
 ```
 git@github.com:radenmasabdul/LoanApp.git
 ```
-Then open the file, use VS Code and enter the backend folder by the way
-``` Local Disk (D)/your folder/cd backend ```
-Then, install the method
-``` npm install / npm i ```
-and run the index.js file
-``` nodemon index ``` on terminals.
-
-Then go to the frontend folder by ``` Local Disk (D)/your folder/cd frontend ```
+Then go to folder by ``` Local Disk (D)/your folder/cd projects ```
 Then, install the method
 ``` npm install / npm i ```
 and run the file
-```npm start``` on the terminal.
+```npm run dev``` on the terminal.
 
 Your application is ready to apply!
 
